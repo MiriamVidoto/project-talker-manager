@@ -19,9 +19,18 @@ app.listen(PORT, () => {
 
 app.get('/talker', async (_req, res) => {
   const talkers = await readTalkersData();
-    // if (talkers.length === 0) {
-    //   return res.status(200).json([]);
-    // }
-  // const talkers = [];
+    if (talkers.length === 0) {
+      return res.status(200).json([]);
+    }
   return res.status(200).json(talkers);
+});
+
+app.get('/talker/:id', async (req, res) => {
+  const { id } = req.params;
+  const talkers = await readTalkersData();
+  const talkerIndex = talkers.findIndex((i) => i.id === Number(id));
+  if (talkerIndex < 0) {
+    return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  }
+  return res.status(200).json(talkers[talkerIndex]);
 });
