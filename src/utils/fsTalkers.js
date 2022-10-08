@@ -45,8 +45,20 @@ async function updatedTalkers(idTalker, updateTalkerData) {
     }
 }
 
+async function deleteTalkers(id) {
+  const talkers = await readTalkersData();
+  const newTalkers = talkers.filter((currentPerson) => currentPerson.id !== id);
+  const updatedData = JSON.stringify(newTalkers);
+  try {
+    await fs.writeFile(path.resolve(__dirname, '../talker.json'), updatedData);
+  } catch (error) {
+    console.error(`Erro na exclusão do arquivo: ${error}`);
+  }
+}
+
 module.exports = {
   readTalkersData,
   writeTalkers,
   updatedTalkers,
+  deleteTalkers,
 };

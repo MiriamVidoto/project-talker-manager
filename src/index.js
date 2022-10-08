@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { readTalkersData, writeTalkers, updatedTalkers } = require('./utils/fsTalkers');
+const { readTalkersData, writeTalkers, updatedTalkers, deleteTalkers } = require('./utils/fsTalkers');
 const generateToken = require('./utils/generateToken');
 const { validateEmail, validatePassword } = require('./middlewares/validateLogin');
 const { validateName,
@@ -69,6 +69,13 @@ app.put('/talker/:id',
     const updatedTalkerData = req.body;
     const updatedTalker = await updatedTalkers(Number(id), updatedTalkerData);
     return res.status(200).json(updatedTalker);
+  });
+
+  app.delete('/talker/:id', validateToken, async (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    await deleteTalkers(Number(id));
+    return res.status(204).end();
   });
 
 app.post('/login',
