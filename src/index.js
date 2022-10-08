@@ -1,8 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { readTalkersData, writeTalkers, updatedTalkers, deleteTalkers } = require('./utils/fsTalkers');
 const generateToken = require('./utils/generateToken');
 const { validateEmail, validatePassword } = require('./middlewares/validateLogin');
+const { readTalkersData,
+  writeTalkers,
+  updatedTalkers,
+  deleteTalkers } = require('./utils/fsTalkers');
 const { validateName,
   validateAge,
   validateTalk,
