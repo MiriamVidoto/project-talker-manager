@@ -14,6 +14,20 @@ async function readTalkersData() {
   }
 }
 
+async function readTalkersByName(searchTerm) {
+  try { 
+  const talkers = await readTalkersData();
+  if (!searchTerm || searchTerm.length === 0) {
+    return talkers;
+  }
+  return talkers.filter((talker) =>
+    talker.name.toUpperCase()
+    .includes(searchTerm.toUpperCase()));
+  } catch (error) {
+    console.error(`Erro na leitura do arquivo: ${error}`);
+  }
+}
+
 async function writeTalkers(newTalker) {
   try {
     const talkers = await readTalkersData();
@@ -61,4 +75,5 @@ module.exports = {
   writeTalkers,
   updatedTalkers,
   deleteTalkers,
+  readTalkersByName,
 };
